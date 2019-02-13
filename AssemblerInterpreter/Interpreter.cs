@@ -9,11 +9,9 @@ namespace AssemblerInterpreter
     {
         private IEngine _engine;
 
-        public void Interpret(List<string> listing)
+        public void Interpret(IEnumerable<string> listing)
         {
-            var entriesList = TranslateToEntriesList(listing);
-
-            _engine = new InterpreterEngine(entriesList);
+            _engine = new InterpreterEngine(TranslateToEntriesList(listing));
 
             while (!_engine.InterpetationCompleted)
             {
