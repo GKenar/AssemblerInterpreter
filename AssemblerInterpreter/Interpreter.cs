@@ -7,18 +7,11 @@ namespace AssemblerInterpreter
 {
     public sealed class Interpreter
     {
-        private readonly ITextParser _textParser;
         private IEngine _engine;
 
-        public Interpreter()
+        public void Interpret(List<string> listing)
         {
-            _textParser = new TextParser();
-        }
-
-        public void Interpret(string text)
-        {
-            var linesList = _textParser.Parse(text);
-            var entriesList = TranslateToEntriesList(linesList);
+            var entriesList = TranslateToEntriesList(listing);
 
             _engine = new InterpreterEngine(entriesList);
 

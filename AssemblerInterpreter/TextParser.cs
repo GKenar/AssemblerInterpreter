@@ -29,7 +29,16 @@ namespace AssemblerInterpreter
 
         public List<string> ParseFromFile(string path)
         {
-            throw new NotImplementedException();
+            var linesList = new List<string>();
+
+            using (var streamReader = new StreamReader(path))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    linesList.Add(streamReader.ReadLine());
+                }
+            }
+            return linesList;
         }
 
         private static List<string> Pars(Stream stream)
@@ -41,7 +50,6 @@ namespace AssemblerInterpreter
             {
                 linesList.Add(streamReader.ReadLine());
             }
-
             return linesList;
         } 
     }
