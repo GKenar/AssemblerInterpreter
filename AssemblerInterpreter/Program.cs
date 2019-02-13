@@ -6,11 +6,15 @@
         {
             var interpr = new Interpreter();
             interpr.Interpret(
-                "LD r0 #12\n"+
-                "LD r1 #3\n"+
-                "ADD r0 r1\n"+
-                "MOV r0 r5\n"+
-                "SYSCALL r5");
+@"LD r2 #1
+LD r1 #0
+LD r5 #100
+L1:
+ADD r1 r2
+MOV r1 r0
+SUB r0 r5
+SYSCALL r1
+BRGZ L1 r0");
         }
     }
 }

@@ -6,6 +6,7 @@ namespace AssemblerInterpreter.Instructions
     {
         public void Execute(IEngine engine)
         {
+            var memory = engine.Registers;
             var entry = engine.CurrentEntry;
 
             var args = entry.Arguments;
@@ -14,7 +15,7 @@ namespace AssemblerInterpreter.Instructions
             if (args.Count != 1 || regs.Count != 1)
                 throw new ArgumentException(); //Исправить на корректное исключение
 
-            if (Convert.ToInt32(regs[0]) > 0)
+            if (memory[Convert.ToInt32(regs[0])] > 0)
             {
                 engine.GotoLabel(args[0]);
             }

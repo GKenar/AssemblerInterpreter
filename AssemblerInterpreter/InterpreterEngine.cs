@@ -61,6 +61,7 @@ namespace AssemblerInterpreter
                     return;
                 }
             }
+            throw new Exception(); //Нужно корректное исключение
         }
 
         public void GotoByPointer(int ip)

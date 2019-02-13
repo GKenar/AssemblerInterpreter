@@ -51,7 +51,6 @@
     <Compile Include="Instructions\BrInstruction.cs" />
     <Compile Include="Instructions\ClearInstruction.cs" />
     <Compile Include="Instructions\IExecutableInstruction.cs" />
-    <Compile Include="Instructions\InstructionResult.cs" />
     <Compile Include="Instructions\MovInstruction.cs" />
     <Compile Include="Instructions\SubInstruction.cs" />
     <Compile Include="Instructions\SyscallInstruction.cs" />
