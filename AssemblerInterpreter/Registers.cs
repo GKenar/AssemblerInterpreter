@@ -14,5 +14,13 @@
         {
             _bytesArray = new byte[15];
         }
+
+        public void ClearRegisters()
+        {
+            for (var i = 0; i < _bytesArray.Length; i++)
+            {
+                _bytesArray[i] = 0;
+            }
+        }
     }
 }
