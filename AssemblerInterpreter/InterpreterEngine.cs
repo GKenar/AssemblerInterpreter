@@ -11,6 +11,7 @@ namespace AssemblerInterpreter
         private int _ip;
 
         public IRegisters Registers { get; private set; }
+        public Entry CurrentEntry => _entriesList[_ip];
         public bool InterpetationCompleted => _ip >= _entriesList.Count;
 
         public InterpreterEngine(List<Entry> entriesList)
@@ -37,7 +38,7 @@ namespace AssemblerInterpreter
                 if (instruction == null)
                     throw new Exception(); //Нужно корректное исключение
 
-                instruction.Execute(Registers, currentEntry);
+                instruction.Execute(this);
             }
 
             _ip++;

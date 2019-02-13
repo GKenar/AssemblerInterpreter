@@ -4,8 +4,11 @@ namespace AssemblerInterpreter.Instructions
 {
     class AddInstruction : IExecutableInstruction
     {
-        public void Execute(IRegisters memory, Entry entry)
+        public void Execute(IEngine engine)
         {
+            var memory = engine.Registers;
+            var entry = engine.CurrentEntry;
+
             var args = entry.Arguments;
             var regs = entry.Registers;
 

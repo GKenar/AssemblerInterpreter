@@ -2,6 +2,6 @@
 {
     public interface IExecutableInstruction
     {
-        void Execute(IRegisters memory, Entry entry); //Был результат
+        void Execute(IEngine engine); //Был результат
     }
 }
