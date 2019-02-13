@@ -23,6 +23,12 @@ namespace AssemblerInterpreter
 
             _instructions.Add("LD", new LoadInstruction());
             _instructions.Add("ADD", new AddInstruction());
+            _instructions.Add("MOV", new MovInstruction());
+            _instructions.Add("SUB", new SubInstruction());
+            _instructions.Add("BR", new BrInstruction());
+            _instructions.Add("BRGZ", new BrGzInstruction());
+            _instructions.Add("CLEAR", new ClearInstruction());
+            _instructions.Add("SYSCALL", new SyscallInstruction());
 
             _ip = 0;
         }
