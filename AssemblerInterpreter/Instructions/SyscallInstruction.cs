@@ -9,12 +9,12 @@ namespace AssemblerInterpreter.Instructions
             var memory = engine.Registers;
             var entry = engine.CurrentEntry;
 
-            var regs = entry.Registers;
+            var args = entry.Arguments;
 
-            if (regs.Count != 1)
+            if (args.Count != 1)
                 throw new ArgumentException(); //Исправить на корректное исключение
 
-            Console.WriteLine(memory[Convert.ToInt32(regs[0])]);
+            Console.WriteLine(memory[Convert.ToInt32(args[0])]);
         }
     }
 }

@@ -7,6 +7,5 @@ namespace AssemblerInterpreter
         public EntryTypes EntryType;
         public string Value;
         public List<string> Arguments;
-        public List<string> Registers;
     }
 }

@@ -9,13 +9,13 @@ namespace AssemblerInterpreter.Instructions
             var memory = engine.Registers;
             var entry = engine.CurrentEntry;
 
-            var regs = entry.Registers;
+            var args = entry.Arguments;
 
-            if (regs.Count != 2)
+            if (args.Count != 2)
                 throw new ArgumentException(); //Исправить на корректное исключение
 
-            var reg1 = Convert.ToInt32(regs[0]);
-            var reg2 = Convert.ToInt32(regs[1]);
+            var reg1 = Convert.ToInt32(args[0]);
+            var reg2 = Convert.ToInt32(args[1]);
 
             memory[reg2] = memory[reg1];
         }
