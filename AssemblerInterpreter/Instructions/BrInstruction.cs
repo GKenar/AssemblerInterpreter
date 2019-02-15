@@ -4,6 +4,8 @@ namespace AssemblerInterpreter.Instructions
 {
     class BrInstruction : IExecutableInstruction
     {
+        public string InstructionArgsPattern => @"^([A-z|0-9]+)$";
+
         public void Execute(IEngine engine)
         {
             var entry = engine.CurrentEntry;

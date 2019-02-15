@@ -7,17 +7,15 @@ namespace AssemblerInterpreter
     class InterpreterEngine : IEngine
     {
         private readonly Dictionary<string, IExecutableInstruction> _instructions;
-        private readonly List<Entry> _entriesList;
+        private List<Entry> _entriesList;
         private int _ip;
 
         public IRegisters Registers { get; private set; }
         public Entry CurrentEntry => _entriesList[_ip];
         public bool InterpetationCompleted => _ip >= _entriesList.Count;
 
-        public InterpreterEngine(List<Entry> entriesList)
+        public InterpreterEngine()
         {
-            _entriesList = entriesList;
-
             Registers = new Registers();
             _instructions = new Dictionary<string, IExecutableInstruction>();
 
@@ -30,6 +28,14 @@ namespace AssemblerInterpreter
             _instructions.Add("CLEAR", new ClearInstruction());
             _instructions.Add("SYSCALL", new SyscallInstruction());
 
+            _ip = 0;
+        }
+
+        public void LoadNewEntriesList(List<Entry> entriesList)
+        {
+            _entriesList = entriesList;
+
+            Registers.ClearRegisters();
             _ip = 0;
         }
 
@@ -70,6 +76,11 @@ namespace AssemblerInterpreter
                 throw new ArgumentOutOfRangeException(nameof(ip));
 
             _ip = ip;
+        }
+
+        public string GetInstructionPattern(string instruction)
+        {
+            return _instructions[instruction]?.InstructionArgsPattern;
         }
     }
 }

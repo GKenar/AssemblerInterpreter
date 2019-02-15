@@ -4,6 +4,8 @@ namespace AssemblerInterpreter.Instructions
 {
     class BrGzInstruction : IExecutableInstruction
     {
+        public string InstructionArgsPattern => @"^([A-z|0-9]+) r(\d+)$";
+
         public void Execute(IEngine engine)
         {
             var memory = engine.Registers;

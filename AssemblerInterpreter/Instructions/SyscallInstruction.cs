@@ -4,6 +4,8 @@ namespace AssemblerInterpreter.Instructions
 {
     class SyscallInstruction : IExecutableInstruction
     {
+        public string InstructionArgsPattern => @"^r(\d+)$";
+
         public void Execute(IEngine engine)
         {
             var memory = engine.Registers;

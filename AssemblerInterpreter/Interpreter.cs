@@ -7,11 +7,16 @@ namespace AssemblerInterpreter
 {
     public sealed class Interpreter
     {
-        private IEngine _engine;
+        private readonly IEngine _engine;
+
+        public Interpreter()
+        {
+            _engine = new InterpreterEngine();
+        }
 
         public void Interpret(IEnumerable<string> listing)
         {
-            _engine = new InterpreterEngine(TranslateToEntriesList(listing));
+            _engine.LoadNewEntriesList(TranslateToEntriesList(listing));
 
             while (!_engine.InterpetationCompleted)
             {
@@ -23,29 +28,52 @@ namespace AssemblerInterpreter
         {
             var entriesList = new List<Entry>();
 
-            var regexInstruction = new Regex(@"^([A-z]+)($|\s)");
+            var regexInstruction = new Regex(@"^([A-z]+)(\s(.*)|$)");
             var regexLabel = new Regex(@"^([A-z|0-9]+):$");
-            var regexArguments = new Regex(@"(\sr|\s#|\s)(\d+|[A-Z|0-9]+)");
 
             foreach (var line in linesList)
             {
                 var regexInstrMatch = regexInstruction.Match(line);
                 var regexLabelMatch = regexLabel.Match(line);
-                var regexArgMatch = regexArguments.Matches(line);
 
                 var isInstruction = regexInstrMatch.Success;
                 var isLabel = regexLabelMatch.Success;
-                var argumentsList = (from Match arg in regexArgMatch select arg.Groups[2].Value).ToList();
 
-                if(!isLabel && !isInstruction)
+                if (!isLabel && !isInstruction)
                     throw new Exception(); //Корректное исключение
 
-                entriesList.Add(new Entry
+                if (isInstruction)
                 {
-                    Value = isInstruction ? regexInstrMatch.Groups[1].Value : regexLabelMatch.Groups[1].Value,
-                    EntryType = isInstruction ? EntryTypes.Instruction : EntryTypes.Label,
-                    Arguments = argumentsList
-                });
+                    var instructionPattern = _engine.GetInstructionPattern(regexInstrMatch.Groups[1].Value);
+
+                    if (instructionPattern == null)
+                        throw new Exception(); //Корректное исключение
+
+                    var regexArgsMatch = new Regex(instructionPattern).Match(regexInstrMatch.Groups[3].Value);
+
+                    var argumentsList = new List<string>();
+                    for (var i = 1; i < regexArgsMatch.Groups.Count; i++)
+                    {
+                        argumentsList.Add(regexArgsMatch.Groups[i].Value);
+                    }
+
+                    entriesList.Add(new Entry
+                    {
+                        Value = regexInstrMatch.Groups[1].Value,
+                        EntryType = EntryTypes.Instruction,
+                        Arguments = argumentsList
+                    });
+                }
+                else
+                {
+                    entriesList.Add(new Entry
+                    {
+                        Value = regexLabelMatch.Groups[1].Value,
+                        EntryType = EntryTypes.Label,
+                        Arguments = null
+                    });
+                }
+
             }
 
             return entriesList;
