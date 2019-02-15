@@ -11,9 +11,7 @@ Instructions:
 7) `CLEAR`  Clear all registers
 8) `SYSCALL r{number}`  Print to console register content
 
-Label syntax:
-      
-`{TEXT}:`
+Label syntax: `{TEXT}:`
 
 ---
 # Program example
@@ -29,4 +27,21 @@ MOV r1 r0
 SUB r0 r5
 SYSCALL r1
 BRGZ L1 r0
+```
+
+This program writing Fibonacci numbers to 233
+```
+LD r0 #0
+LD r1 #1
+LD r2 #1
+LD r10 #233
+SYSCALL r2
+JMP:
+SYSCALL r1
+MOV r1 r0
+ADD r1 r2
+MOV r0 r2
+MOV r0 r11
+SUB r11 r10
+BRGZ JMP r11
 ```
